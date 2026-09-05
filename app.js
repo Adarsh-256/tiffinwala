@@ -31,8 +31,7 @@ const upload = multer({ storage });
 const Menu = require ("./models/menu.js");
 const { appendFile } = require("fs/promises");
 
-// const dbUrl = process.env.ATLASDB_URL;
-const dbUrl = 'mongodb://localhost:27017/tiffinwala';
+ const dbUrl = process.env.ATLASDB_URL;
 
 // console.log("dbUrl", dbUrl);
 
