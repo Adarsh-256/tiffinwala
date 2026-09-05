@@ -1,0 +1,191 @@
+<%- layout('/layouts/boilerplate') %>
+
+<div class="new-container" style="margin-top: 60px; background-color:rgb(158, 147, 142) ;">
+  <div class="row ">
+
+    <!-- Sidebar -->
+    <div class="col-md-2 bg-secondary vh-40 p-3">
+      <div class="list-group ">
+        <a href="/provider/index" class="list-group-item list-group-item-action">
+          <i class="fa-solid fa-chart-line"></i>
+          Overview
+        </a>
+        <a href="/provider/create" class="list-group-item list-group-item-action">
+          <i class="fa-solid fa-clipboard-list"></i>
+          Create Menu
+        </a>
+        <a href="/provider/index#menu" class="list-group-item list-group-item-action">
+          <i class="fa-solid fa-list"></i>
+          Menu Management
+        </a>  <a href="/provider/index#customers" class="list-group-item list-group-item-action">
+          <i class="fa-solid fa-user"></i>
+          Customers
+        </a>
+      </div>
+    </div>
+
+ 
+    <!-- Main Content -->
+    <div id="main-content" class=" col-md-10 p-4 mb-4 ">
+      <h3 class="fw-bold">
+        Dashboard Overview
+      </h3>
+      <p class="text-muted">
+        Welcome to your provider dashboard. Here you can manage your tiffin services, view orders, and update your profile.
+      </p>
+
+   <div class="overview d-flex justify-content-start gap-4 p-3  ">
+  <div class="card p-3" style="width:250px;">
+    <h5>Total Orders</h5>
+    <h2><%= orders.length %></h2>
+  </div>
+
+
+  <div class="card p-3" style="width:250px;">
+    <h5>Revenue</h5>
+
+  <% let totalR = 0;
+  orders.forEach(order => {
+    totalR += Number(order.totalPrice || 0) 
+    })%>
+    <h2>₹<%= totalR.toLocaleString('en-IN') %></h2>
+  </div>
+
+  <div class="card p-3" style="width:250px;">
+    <h5>Rating</h5>
+    <h2>0</h2>
+  </div>
+
+
+</div>
+      
+<!-- today orders -->
+ <div class="container bg-light p-4">
+    <h2>Today's Orders</h2>
+    <p>Manage today's customer orders</p>
+
+    <% if (orders.length === 0) { %>
+        <div class="alert alert-info">
+            No orders today.
+        </div>
+    <% } %>
+   
+    <% orders.forEach(order => { %>
+        <div class="card mb-3 shadow-sm">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h5>
+                            Order #<%= order._id.toString().slice(-6) %>
+                        </h5>
+                        <p>
+                            Customer:
+                            <%= order.customer.username %>
+                        </p>
+                       
+                        <p>
+                            Quantity:
+                            <%= order.quantity %>
+                        </p>
+                        <p>
+                            Address:
+                            <%= order.address %>
+                        </p>
+                    </div>
+                    <div class="text-end">
+                        <h4 class="text-success">
+                            ₹ <%= order.totalPrice %>
+                        </h4>
+                        <p>
+                            Status:
+                            <strong><%= order.status %></strong>
+                        </p>
+                        <% if (order.status === "Pending") { %>
+                            <form
+                                action="/provider/menu/<%= order._id %>/order/accept"
+                                method="POST">
+
+                                <button class="btn btn-success">
+                                    Accept Order
+                                </button>
+                            </form>
+                        <% } %>
+
+                        <% if (order.status === "Accepted") { %>
+                            <form
+                                action="/provider/menu/<%= order._id %>/order/deliver"
+                                method="POST">
+                                <button class="btn btn-primary">
+                                    Mark Delivered
+                                </button>
+                            </form>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <% }) %>
+</div>
+  
+  <!-- menu management -->
+    
+ <div id="menu" class=" container bg-light col-md-13 p-4 mt-89">
+  <div>
+    <h3 class="fw-bold">Menu Management</h3>
+    <p class="text-muted">Update your menu items and prices</p>
+  </div>
+   <div class="row g-4">
+
+  <% for(let menu of allMenu){ %>
+    <div class="col-lg-4 col-md-6 col-sm-12">
+      <div class="card h-100 shadow">
+        <a href="/provider/menu/<%= menu._id %>" class="text-decoration-none text-dark">
+          <img src="<%= menu.image.url %>"
+               class="card-img-top"
+               alt="menu_image"
+               style="height:220px; object-fit:cover;">
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title fw-bold">
+              <%= menu.title %>
+            </h5>
+           <p class="card-text text-muted mb-3">
+              <%= menu.description %>
+            </p>
+            <h6 class="text-danger fw-bold mb-3">
+              ₹ <%= menu.price.toLocaleString('en-IN') %>
+              <small class="text-muted">+18% GST</small>
+            </h6>
+            <div class=" d-flex justify-content-around align-items-center gap-2">
+              <a href="/provider/menu/<%= menu._id %>/edit" class="btn btn-warning w-100">
+                Edit Menu
+              </a>  <a href="/provider/menu/<%= menu._id %>" class="btn btn-primary w-100">
+                View Details
+              </a>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  <% } %>
+</div>
+ </div>
+
+<!-- customers -->
+  <div id="customers" class=" container bg-light col-md-13 p-4 mt-89">
+     <div>
+    <h3 class="fw-bold">Customer details</h3>
+    <% if(owner.role === "provider" || owner === "User") { %>
+      <h5>Name: <%= owner.username %></h5>
+      <h6>Email: <%= owner.email %></h6>
+       <h6>
+        Brand Name:
+        <%= provider && provider.businessName ? provider.businessName : "Not provided" %>
+      </h6>
+      <h6>Phone: <%= owner.phone ? owner.phone : "Not provided " %></h6>
+      <h6>Address: <%= provider.address ? provider.address : "Not provided" %></h6>
+      <% } %> 
+  </div>
+  </div>
+</div>
+</div>
+</div>

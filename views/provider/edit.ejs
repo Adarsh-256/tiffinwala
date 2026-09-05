@@ -1,0 +1,63 @@
+<% layout('/layouts/boilerplate') -%>
+
+<body>
+    <div class="edit-container">
+    <div class="row"> 
+      <div class="col-md-6 offset-md-3">
+
+      <h1 class="text-center">Now you can Edit !!</h1><br><br>
+      <form method="POST" action="/Provider/menu/<%= menu._id %>?_method=PUT" 
+        novalidate class="needs-validation" enctype="multipart/form-data">
+          <div class="row ">
+            <div class="mb-3 col-md-6">
+              <label for="title" class="form-title" >Title:</label>
+              <input name="menu[title]" type="text" id="input-b" value="<%=menu.title%>" class="form-control">
+            <div class="valid-feedback">Title looks good !! </div>
+            </div>
+            <div class="mb-3 col-md-6">
+               <label for="title" class="form-title" >Category:</label>
+              <select id="input-b" class="form-control"  name="menu[category]" required>
+                  <option value="">Select category</option>
+                  <option value="veg">Veg</option>
+                  <option value="non-veg">Non-Veg</option>
+                
+
+              </select>
+              <div class="invalid-feedback">Please select category! </div>
+
+            </div>
+            <div class="mb-3 col-md-6">
+              <label for="location" class="form-location">Price:</label>
+              <input  name="menu[price]" id="input-b" type="number" value="<%=menu.price%>" class="form-control">
+            </div>
+          </div>  
+         <div class="row ">
+            <div class="mb-3 col-md-6">
+               <label for="location" class="form-location">Location:</label>
+               <input  name="menu[location]" id="input-b" type="text" value="<%=menu.location%>" class="form-control">
+            </div>
+        
+         </div>
+          <div class="mb-3 col-md-6">
+               <label for="image" class="form-image"> Old menu image </label><br>
+            <img src="<%= originalImageUrl %>" alt="Menu Image" class="img-fluid">
+          </div>
+           <div class=" row mb-3 col-md-12">
+               <label for="image" class="form-image"> Upload New menu image </label>
+               <input  name="menu[image]"  id="input-b" type="file"  class="form-control">
+           </div><br>
+           <div class=" row mb-3 col-md-12">
+                <label for="description" class="form-description">Description:</label>
+                <textarea  name="menu[description]" id="input-b" type="text" value="<%=menu.description%>" class="form-control" > </textarea>
+                <div class="invalid-feedback">Please enter a short description.</div>
+           </div><br><br>
+           <div class="d-grid gap-md-5 d-md-flex justify-content-md-center align-items-center">
+             <button class="btn btn-primary ">  Update Menu</button><br><br>
+             <a href="/provider/index" class="btn btn-secondary float-right">Cancel</a>
+             <br><br>
+           </div>
+          
+    </form>
+    </div>
+    </div>
+</body>

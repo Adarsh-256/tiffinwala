@@ -1,0 +1,98 @@
+<%- layout('/layouts/boilerplate') %>
+
+<div class="container d-flex justify-content-center align-items-center" style="height:100vh;">
+  <div class="card shadow p-4" style="width:400px; border-radius:15px;">
+
+    <h3 class="text-center mb-3">Create Account</h3>
+
+    <!-- Toggle -->
+    <div class="d-flex mb-3 m-0 p-0">
+      <button class="btn btn-success w-50 " id="custBtn" onclick="showCustomer()">Customer</button>
+      <button class="btn btn-outline-success w-50" id="provBtn" onclick="showProvider()">Provider</button>
+    </div>
+
+    <form action="/signup" method="POST">
+
+      <input type="hidden" name="role" id="role" value="customer">
+
+      <!-- Customer -->
+      <div id="customerForm">
+        <input class="form-control mb-2"  type="text" name="username" placeholder="Username" required>
+        <input class="form-control mb-2" type="email" name="email" placeholder="Email" required>
+        <input class="form-control mb-2" type="password" name="password" placeholder="Password" required> 
+        <input class="form-control mb-2" type="tel" name="phone" placeholder="Phone number" required>
+        <textarea class="form-control mb-2" type="text" name="address" placeholder="Delivery Address"></textarea>
+      </div>
+
+      <!-- Provider -->
+      <div id="providerForm" style="display:none;">
+        <input class="form-control mb-2" type="text" name="username" placeholder="Provider Name" required>
+        <input class="form-control mb-2" type="email" name="email" placeholder="Email" required>
+        <input class="form-control mb-2" type="password" name="password" placeholder="Password" required>
+        <input class="form-control mb-2" type="tel" name="phone" placeholder="Phone number" required>
+        <input class="form-control mb-2" type="text" name="businessName" placeholder="Brand Name" required>
+        <textarea class="form-control mb-2" type="text" name="address" placeholder="Provider Address" required></textarea>
+      </div>
+
+      <!-- Terms -->
+      <div class="form-check mb-2">
+        <input class="form-check-input" type="checkbox" required>
+        <label class="form-check-label">
+          I agree to Terms & Conditions
+        </label>
+      </div>
+
+      <button  type="submit" class="btn btn-success w-100 mt-2">Sign Up</button>
+
+
+    </form>
+
+    <!-- Login Link -->
+    <p class="text-center mt-3">
+      Already have an account? <a href="/login">Login</a>
+    </p>
+
+  </div>
+</div>
+
+<script>
+function toggleInputs(formId, enable) {
+  document.querySelectorAll(`#${formId} input, #${formId} textarea`)
+    .forEach(el => el.disabled = !enable);
+}
+
+function showCustomer() {
+  customerForm.style.display = "block";
+  providerForm.style.display = "none";
+  role.value = "customer"; 
+
+  toggleInputs("customerForm", true);
+  toggleInputs("providerForm", false);
+
+  custBtn.classList.add("btn-success");
+  custBtn.classList.remove("btn-outline-success");
+
+  provBtn.classList.add("btn-outline-success");
+  provBtn.classList.remove("btn-success");
+}
+
+function showProvider() {
+  customerForm.style.display = "none";
+  providerForm.style.display = "block";
+  role.value = "provider";
+
+  toggleInputs("customerForm", false);
+  toggleInputs("providerForm", true);
+
+  provBtn.classList.add("btn-success");
+  provBtn.classList.remove("btn-outline-success");
+
+  custBtn.classList.add("btn-outline-success");
+  custBtn.classList.remove("btn-success");
+}
+
+// 🔥 page load pe provider disable kar do
+window.onload = () => {
+  toggleInputs("providerForm", false);
+};
+</script>

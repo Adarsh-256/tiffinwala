@@ -1,0 +1,81 @@
+<%- layout('/layouts/boilerplate') %>
+
+<body class="new-container" style="margin-top: 60px; background-color:rgb(158, 147, 142) ;">
+    <div class="row">
+         <!-- Sidebar -->
+    <div class="col-md-2 bg-secondary vh-40 p-3">
+      <div class="list-group ">
+        <a href="/provider/index" class="list-group-item list-group-item-action">
+          <i class="fa-solid fa-chart-line"></i>
+          Overview
+        </a>
+        <a href="/provider/create" class="list-group-item list-group-item-action">
+          <i class="fa-solid fa-clipboard-list"></i>
+          Create Menu
+        </a>
+        <a href="/provider/index#menu" class="list-group-item list-group-item-action">
+          <i class="fa-solid fa-list"></i>
+          Menu Management
+        </a>  <a href="/provider/index#customers" class="list-group-item list-group-item-action">
+          <i class="fa-solid fa-user"></i>
+          Customers
+        </a>
+      </div>
+    </div>
+      <div class="col-md-6 offset-md-2 p-4 mb-4 ">
+
+      <h1 class="text-center">Create New menu </h1><br><br>
+      <form method="POST" action="/provider/create" novalidate class="row g-3 needs-validation" enctype="multipart/form-data">
+          <div class="row ">
+            <div class="mb-3 col-md-6">
+              <label for="title" class="form-title" >Menu Title:</label>
+              <input name="menu[title]" id="input-b" type="text" placeholder=" Enter menu title" class="form-control" required>
+              <div class="invalid-feedback">Please enter the title! </div>
+            </div>
+            <div class="mb-3 col-md-6">
+               <label for="title" class="form-title" >Category:</label>
+              <select id="input-b" class="form-control" name="menu[category]" required>
+                  <option value="">Select category</option>
+                  <option value="veg">Veg</option>
+                  <option value="non-veg">Non-Veg</option>    
+              </select>
+              <div class="invalid-feedback">Please select category! </div>
+            </div>
+          </div>  
+
+         <div class="row ">
+            <div class="mb-3 col-md-6">
+               <label for="location" class="form-location">Location:</label>
+               <input  name="menu[location]" id="input-b" type="text"class="form-control" placeholder="Enter location" required>
+              <div class="invalid-feedback">Please enter the location! </div>
+            </div>
+             <div class="mb-3 col-md-6">
+              <label for="location" class="form-location">Price:</label>
+              <input  name="menu[price]"class="form-control" id="input-b" placeholder="Enter Price" required type="number" min="0">
+              <div class="invalid-feedback">Please enter the Price! </div>
+            </div>
+           
+         </div>
+           <div class=" row mb-3 col-md-12">
+               <label for="image" class="form-image">Upload menu image:</label>
+               <input  name="menu[image]" id="input-b" type="file" class="form-control" placeholder="Upload menu image " required>
+              <div class="invalid-feedback">Please upload an menu image! </div>
+        
+           </div><br>
+           <div class=" row mb-3 col-md-12">
+                <label for="description" class="form-description">Description:</label>
+                <textarea  name="menu[description]" id="input-b" type="text" class="form-control" placeholder="Enter description"required></textarea>
+              <div class="invalid-feedback">Please write short description!</div>
+
+           </div><br><br>
+           <div class="d-grid gap-md-5 d-md-flex justify-content-md-center align-items-center">
+             <button class="btn btn-primary ">  Create Menu</button><br><br>
+             <a href="/provider/index" class="btn btn-secondary float-right"> Back to Menu</a>
+             <br><br>
+           </div>
+          
+    </form>
+    </div>
+    </div>
+  </div>
+</body> 

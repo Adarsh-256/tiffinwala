@@ -1,0 +1,44 @@
+body{
+    background:#f8f9fa;
+}
+
+.sidebar{
+    min-height:100vh;
+}
+
+.list-group-item{
+    border:none;
+    padding:15px;
+    font-size:18px;
+}
+
+.list-group-item.active{
+    background:#fff3e5;
+    color:#ff6600;
+    font-weight:bold;
+}
+
+.card{
+    border-radius:18px;
+    overflow:hidden;
+    transition:.3s;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 10px 25px rgba(0,0,0,.15);
+}
+
+.card img{
+    height:220px;
+    object-fit:cover;
+}
+
+.btn-warning{
+    background:#ff6600;
+    border:none;
+}
+
+.btn-warning:hover{
+    background:#e65c00;
+}
