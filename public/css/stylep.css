@@ -1,44 +1,112 @@
-body{
-    background:#f8f9fa;
+.new-container {
+  width: 100%;
+  min-height: 100vh;
+    margin-top: 0 !important;
 }
 
-.sidebar{
-    min-height:100vh;
+.sidebar {
+  min-height: 100vh;
 }
 
-.list-group-item{
-    border:none;
-    padding:15px;
-    font-size:18px;
+.list-group-item {
+  border: none;
+  padding: 15px;
+  font-size: 18px;
 }
 
-.list-group-item.active{
-    background:#fff3e5;
-    color:#ff6600;
-    font-weight:bold;
+.list-group-item.active {
+  background: #fff3e5;
+  color: #ff6600;
+  font-weight: bold;
 }
 
-.card{
-    border-radius:18px;
-    overflow:hidden;
-    transition:.3s;
+.overview {
+  flex-wrap: wrap;
 }
 
-.card:hover{
-    transform:translateY(-8px);
-    box-shadow:0 10px 25px rgba(0,0,0,.15);
+.overview .card {
+  flex: 1 1 220px;
+  max-width: 300px;
 }
 
-.card img{
-    height:220px;
-    object-fit:cover;
+#main-content {
+  min-width: 0;
 }
 
-.btn-warning{
-    background:#ff6600;
-    border:none;
+#main-content .container,
+#menu.container,
+#customers.container,
+#current-orders.container,
+#order-history.container,
+#profile.container {
+  max-width: 100%;
 }
 
-.btn-warning:hover{
-    background:#e65c00;
+@media (max-width: 767px) {
+  .new-container {
+    margin-top: 0px !important;
+  }
+
+  .new-container > .row {
+    margin: 0;
+  }
+
+  .sidebar {
+    min-height: auto;
+    width: 100%;
+  }
+
+  .sidebar .list-group {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 5px;
+  }
+
+  .sidebar .list-group-item {
+    white-space: nowrap;
+    font-size: 14px;
+    padding: 10px 12px;
+  }
+
+  #main-content {
+    width: 100%;
+    padding: 15px !important;
+  }
+
+  .overview {
+    flex-direction: column;
+    gap: 15px !important;
+    padding: 10px !important;
+  }
+
+  .overview .card {
+    width: 100% !important;
+    max-width: none;
+  }
+
+  #menu,
+  #customers,
+  #current-orders,
+  #order-history,
+  #profile {
+    width: 100% !important;
+    margin: 15px 0 !important;
+    padding: 15px !important;
+  }
+
+  #main-content .card-body {
+    padding: 15px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .sidebar .list-group-item {
+    font-size: 14px;
+    padding: 12px 8px;
+  }
+
+  #main-content {
+    padding: 20px !important;
+  }
 }

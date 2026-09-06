@@ -35,6 +35,7 @@ const { appendFile } = require("fs/promises");
 
 // console.log("dbUrl", dbUrl);
 
+
 //to apply bolierplate to all the ejs files
 app.set("view engine","ejs");
 app.set("views",path.join(__dirname,"/views"));                 
@@ -69,19 +70,26 @@ const sessionOptions={
 // console.log(process.env.SECRET);
 app.use(require("express-session")(sessionOptions));
 
+app.use((req, res, next) => {
+    res.locals.currentPath = req.path;
+    next();
+});
 
 //to connect mongoDB 
 main()
 .then(()=>{
     console.log("connected to mongoDB");
 }).catch((err)=>{
-    console.log("error connecting to mongoDB", err);
+    console.log("error connecting to mongoDB", err); 
 });
 async function main(){  
     await mongoose.connect(dbUrl);
-};
+}; 
 
-
+app.use((req, res, next) => {
+    res.locals.currentPath = req.path;
+    next();
+});
 // Flash messages + authentication 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -147,7 +155,7 @@ app.post("/provider/create",isLoggedIn,upload.single("menu[image]"),validateMenu
 
 //show route
 app.get("/provider/menu/:id",menucontrollers.showMenu);
-
+app.get("/menu/:id",menucontrollers.showMenu);
 
 // provider
 app.get("/provider/index", isLoggedIn, menucontrollers.providerIndex); 
